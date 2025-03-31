@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Your Website</title>
+    <link rel="shortcut icon" href="title.png" type="image/x-icon">
+    
+    <style>
+        /* General Reset */
+
+        * {
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            box-sizing: border-box;
+        }
+
+        /* Full Page Gradient Background Animation */
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 8s ease infinite;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 0;
+            /* Changed padding to zero on the body */
+            margin: 0;
+        }
+
+        /* Gradient Animation */
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Header Styling */
+
+        .header {
+            width: 100%;
+            background: transparent;
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            /* Ensure header stays on top */
+            transition: top 0.3s;
+            /* Add transition for smooth hiding/showing */
+        }
+
+        /* Navbar */
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Logo */
+
+        .logo img {
+            height: 125px;
+            -webkit-filter: drop-shadow(-1px -1px 0 white) drop-shadow(1px -1px 0 white) drop-shadow(-1px 1px 0 white) drop-shadow(1px 1px 0 white);
+            filter: drop-shadow(-1px -1px 0 white) drop-shadow(1px -1px 0 white) drop-shadow(-1px 1px 0 white) drop-shadow(1px 1px 0 white);
+            /* Creates an outline effect */
+        }
+
+        /* Navigation Menu */
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links li {
+            display: inline;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 8px 12px;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        /* Hamburger Menu */
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            /* New styling for the hamburger */
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Hover style */
+        }
+
+        /* Responsive Design */
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .logo img {
+                height: 70px;
+                /* Smaller size for mobile */
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 1%;
+                /* Position it below the header */
+                left: 0;
+                width: 100%;
+                /* Full width */
+                background: rgba(0, 0, 0, 0.8);
+                text-align: center;
+                padding: 10px 0;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-links.active {
+                display: flex;
+                /* or block, depending on your design */
+                flex-direction: column;
+                /* Ensure vertical stacking */
+                padding: 20px;
+                /* Add padding around links */
+                border-radius: 5px;
+                /* Rounded corners */
+                animation: slideIn 0.3s ease forwards;
+                /* Add animation */
+            }
+
+            @keyframes slideIn {
+                from {
+                    transform: translateY(-20px);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+                padding: 10px;
+                /* Add padding to list items */
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                /* Add a light border */
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+                /* Remove border from last item */
+            }
+        }
+
+        /* Removed the transparent-box */
+
+        /* Text Reveal Animation */
+
+        .about-text {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: textReveal 1s forwards 0.5s;
+            border: 3px;
+            border-color: #333;
+        }
+
+        @keyframes textReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /*  Crucial responsive changes begin here */
+
+        .event-container {
+            border: 1px solid #c5c3c3;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 90%;
+            /* Responsive width */
+            max-width: 600px;
+            /* Optional: Maximum width */
+            margin: 20px auto;
+            /* Centers and adds margin */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .event-info {
+            padding: 15px;
+            /* Reduced padding */
+            background-color: #00000099;
+        }
+
+        .event-title {
+            font-size: 20px;
+            /* Smaller title */
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .event-organizer {
+            font-style: italic;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .event-description {
+            line-height: 1.3;
+            margin-bottom: 10px;
+            color: #fff;
+            font-size: 14px;
+            /* Smaller description font */
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically */
+            align-items: center;      /* Center buttons horizontally */
+            margin-top: 15px;
+            /* Reduced margin */
+        }
+
+        .button {
+            padding: 8px 16px;
+            /* Smaller button padding */
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            /* Smaller button font */
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.3s ease;
+            margin-bottom: 5px; /* Add space between buttons */
+            width: 100%;        /* Make buttons full width */
+        }
+
+        .register-button {
+            background-color: #007bff;
+        }
+
+        .register-button:hover {
+            background-color: #0056b3;
+        }
+
+        .more-info-button {
+            background-color: #555;
+        }
+
+        .more-info-button:hover {
+            background-color: #333;
+        }
+
+        main {
+            padding-top: 20px;
+            width: 80%;
+            max-width: 1000px;
+            text-align: center;
+            margin: 0 auto;
+             margin-top: 10px; /*Added for spacing*/
+        }
+
+        .about {
+            position: relative; /* Allows for absolute positioning within this container */
+            width: 80%; /* Match width of main */
+            text-align: center; /* Center align content */
+             margin-top: 150px;/*Adding top margin for the text*/
+        }
+        .rules {
+            position: relative; /* Allows for absolute positioning within this container */
+            width: 80%; /* Match width of main */
+            text-align: center; /* Center align content */
+             margin-top: 70px;/*Adding top margin for the text*/
+        }
+    
+
+        /* Footer Section */
+
+        /* Style the social icons */
+
+        .social-icons {
+            margin-bottom: 10px;
+            /* Add spacing between icons and contact details */
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Light background */
+            color: white;
+            border-radius: 50%;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            /* Darker background on hover */
+        }
+
+        /* Style the contact details */
+
+        .contact-details {
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        main {
+            padding-top: 80px;
+            /* Add padding to the top of main content, adjust as needed */
+        }
+
+        /* Footer Section */
+
+        .footer {
+            width: 100%;
+            /* Fills the screen width */
+            /*background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);*/
+            /*background-size: 400% 400%;*/
+            /*animation: gradient 15s ease infinite;*/
+            background-color: #192434;
+            /* Change as needed */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            /* For absolute positioning of background */
+            /*overflow: hidden;
+             Hide any overflowing image content */
+            margin: 0;
+            border-radius: 0;
+
+        }
+
+        /*Remove the background image*/
+        .footer .footer-background {
+            /*display: none;*/
+            /* or visibility: hidden; */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('footer.png');
+            /* Replace 'footer.png' with your image URL */
+            background-size: cover;
+            /* Cover the entire area */
+            background-position: center;
+            opacity: 0.4;
+            /* Adjust for desired transparency */
+            z-index: -1;
+            /* Ensure it's behind the content */
+        }
+
+        .footer .container {
+            position: relative;
+            /* Allows content to be above the background */
+            z-index: 1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 100%;
+            padding-left: 20px;
+            /* Added left padding to container */
+            padding-right: 20px;
+            /* Added right padding to container */
+
+        }
+
+        .footer .socials {
+            margin-bottom: 15px;
+        }
+
+        .footer .socials a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Light background */
+            color: white;
+            border-radius: 50%;
+            margin: 0 8px;
+            transition: all 0.3s ease;
+        }
+
+        .footer .socials a:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            /* Darker background on hover */
+        }
+
+        .footer ul {
+            padding: 0;
+            margin-top: 10px;
+            list-style: none;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .footer ul li {
+            display: block;
+            /* Changed from inline-block */
+            margin: 5px 0;
+            /* Added vertical spacing */
+        }
+
+        .footer ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer .copyright {
+            font-size: 0.7rem;
+            color: #aaa;
+            width: 100%;
+            /* Ensure it takes full width */
+            text-align: center;
+            /* Center the text */
+            margin-top: 15px;
+            /*Added a margin to push it lower*/
+
+        }
+
+        /* Web Team Styling - Now within the footer */
+
+        .web-team {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .web-team h1 {
+            font-size: 2em;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .team-members {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .team-member {
+            width: 150px;
+            text-align: center;
+        }
+
+        .team-member img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .team-member h2 {
+            font-size: 1em;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .team-member p {
+            font-size: 0.9em;
+            color: #ddd;
+        }
+        /* Styles for <details> and <summary> */
+        details {
+            background-color: #222;
+            /* Darker background */
+            border: 1px solid #555;
+            /* Slightly lighter border */
+            border-radius: 5px;
+            margin-top: 10px;
+            padding: 10px;
+            color: #eee;
+            /* Light text */
+        }
+
+        summary {
+            background-color: #333;
+            /* Darker summary background */
+            color: #fff;
+            /* White text */
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="logo.png" alt="Logo">
+            </div>
+            <button class="menu-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="about">
+        <h1 style="font-size: 2.5em; /* Adjust as needed */
+        font-family: 'Arial', sans-serif; /* Choose a nice font */
+        color: #2c3e50; /* A dark, professional color */
+        text-align: center; /* Center the text */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+        letter-spacing: 0.1em; /* Add some spacing between letters */
+        font-weight: bold; /* Make the text bold */
+        margin-bottom: 0.5em; /* Add spacing below the heading */
+        text-transform: uppercase; /* Optional: Make the text uppercase */
+        ">IGNITION 2.0</h1>
+                <h1 id="events">ABOUT EVENTS</h1>
+                <P>The annual day event at CIPET, Jaipur features 12 thrilling competitions, blending technical and non-technical activities like Mr. Mechanic and Hunter Hunk. It fosters creativity, teamwork, and technical excellence, ensuring there's something for everyone. A day of innovation, fun, and camaraderie awaits!</P>
+
+
+    </section>
+    <main>
+        <h1 id="events">EVENTS</h1>
+        <div class="event-container">
+            <img class="event-image" src="display.jpeg" alt="BGMI/Freefire Event">
+
+            <div class="event-info">
+                <h2 class="event-title">The Big Display</h2>
+                <p class="event-organizer">Date – 07.04.2025 </p>
+                <p class="event-description">"The Big Display" is a platform for students to showcase project ideas creatively, fostering teamwork and innovation. Participants present their posters, gaining valuable feedback, connections, and inspiration in a supportive environment.</p>
+                <p>EVENT DETAILS </p><br>
+                <p>• Poster submission deadline- 06.04.2025 before 5.00pm </p><br>
+                <p>REGISTRATION DEADLINE – 06.04.2025</p><br>
+                <p>TRIO</p>
+              
+
+                  <div class="button-container">
+                    <button class="button register-button" onclick="window.open('https://forms.gle/wA1TvSR5cFDUn87x6', '_blank');">Register Now</button>
+                    <details>
+                    <summary class="button more-info-button">More Info</summary>
+                    <p>Here are the detailed rules and guidelines for The Big Display competition:</p>
+                    <br>
+                    <br><p>RULES</p><br>
+                    <p>➢ Submit posters in English, portrait orientation, A1 or A2 size, by 6th April, before 5 PM.</p>
+                    <p>➢ Use a minimum font size of 22px; prominently place the title and authors' names at the top.</p>
+                    <p>➢ Ensure text, diagrams, and charts are neatly prepared and easily readable. </p>
+                    <P>➢ Different colors, textures, or symbols must be used for clarity in graphs or charts.</P> 
+                    <P>Creativity is encouraged—use figures, tables, photographs, and text effectively.</P>
+                    <P>Clearly convey your idea and possess comprehensive knowledge of the concept.</P>
+                    <BR>
+                    <P>CHANGE OF WINNING</P><BR>
+                    <P>➢ Creative thinking – 20 marks</P>
+                    <P>➢ Design and content of poster – 20 marks </P>
+                    <P>➢ Clarity of concept and science behind it – 20 marks </P>
+                    <P>➢ Willingness to build or work on that project – 20 marks </P>
+                    <P>➢ Representation skill – 20 marks </P>
+                    <br>
+                        <p>PRICE & REWARD: </p><br>
+
+                        <p>➢ CERTIFICATE </p>
+                        <p>➢ RECOGNITION IN FRONT OF COLLEGE FACULTY & STUDENT </p>
+                        <p>➢  Support from college side to work on that project </p>
+                        <P>➢ Cash prize</P>
+                        <br>
+                        <p>COORDINTORS: </p><br>
+                        <p>• Ramavath Arun </p>
+                        <p>• Dharmasothu Vasanth Nayak Rathod </p>
+                        <p>• Ankita  </p>
+                        <p>• Honey</p>
+                        <P>• Gopal Kumar</P>
+                </details>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="event-container">
+            <img class="event-image" src="brain.jpeg" alt="BGMI/Freefire Event">
+
+            <div class="event-info">
+                <h2 class="event-title">Brain Wave Battle</h2>
+                <p class="event-organizer">Date – 07.04.2025 </p>
+                <p class="event-description">Step into the Brain Wave Battle, where logic, persuasion, and quick thinking take center stage! This debate competition challenges participants to present strong arguments, counter opponents, and think on their feet. Only the most articulate and well-reasoned debaters will emerge victorious </p>
+                <p>REGISTRATION DEADLINE – 06.04.2025</p><br>
+                <p>SOLO </p>
+              
+
+                  <div class="button-container">
+                    <button class="button register-button" onclick="window.open('https://forms.gle/mssvdpUxq8pgfLWV8', '_blank');">Register Now</button>
+                    <details>
+                    <summary class="button more-info-button">More Info</summary>
+                    <p>Here are the detailed rules and guidelines for the Brain Wave Battle debate competition:</p>
+                    <br><p>RULES</p><br>
+                    <p>➢ Team Formation: Participants compete individually. </p>
+                    <p> ➢ Topic Selection: Topics will be given before the competition (or on the spot for surprise 
+                        rounds). </p>
+                        <p> ➢ Speaking Time: Each participant/team gets a fixed time to present their arguments and 
+                        counterarguments. </p>
+                        <p>➢ Judging Criteria: Debaters will be judged on clarity, content, rebuttal strength, and 
+                        presentation skills. </p>
+                        <p>➢ No Offensive Content: Arguments must be respectful and free from personal attacks. </p>
+                        <p>➢ Time Management: Exceeding the time limit will lead to penalties. </p>
+                        <p>➢ Winner Selection: The best debater/team, based on points from the judges, will be 
+                        declared the winner. </p>
+                        <br><p>Change of Winning :</p><br>
+                        <p>➢ Priority: Strong Arguments, Strong Arguments, Quick Thinking.</p>
+                        <br><p>PRICE & REWARD: </p><br>
+                        <p>➢ Certificate </p>
+                        <p>➢ RECOGNITION IN frond OF collage faculty & student </p>
+                            <p></p><br>
+                        <p>COORDINTOR: </p><br>
+                        <p>• Tanishqa Sahu </p>
+                        <p>• Snaha Khamaru </p>
+                        <p>• Divakar R</p>
+                        <p>• Sagar Kumar</p>
+                </details>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="event-container">
+            <img class="event-image" src="painting.jpeg" alt="BGMI/Freefire Event">
+
+            <div class="event-info">
+                <h2 class="event-title">Painting</h2>
+                <p class="event-organizer">Date – 07.04.2025 </p>
+                <p class="event-description">Painting in the engineering field is far more than artistic expression's. It’s not just about creating an aesthetically pleasing image; it's about conveying the core values and expertise of an engineering firm. Color palettes tend to favor blues and grays, which evoke feelings of stability and professionalism. In essence, an effective drawing serves as a visual representation of technical expertise, reliability, and commitment to innovation.</p>
+                <p>REGISTRATION DEADLINE – 06.04.2025</p><br>
+                <p>SOLO </p>
+              
+
+                  <div class="button-container">
+                    <button class="button register-button" onclick="window.open('https://forms.gle/mssvdpUxq8pgfLWV8', '_blank');">Register Now</button>
+                    <details>
+                    <summary class="button more-info-button">More Info</summary>
+                    <p>Here are the detailed rules and guidelines for the Painting competition:</p>
+                    <br>
+                    <p>RULES</p><br>
+                    <p>➢ Only A4 sheets are provided from college. Students are asked 
+                        to bring their own colour, pencils whatever accessories are 
+                        needed. </p>
+                    <p>➢ The time limit is 1 hours.</p>
+                    <p>➢ No mobiles are allowed during competition. </p>
+                        <br>
+                        <p>TOPICS </p><br>
+
+                        <p>• No Plastics to Know Plastics </p>
+                        <p>• Fusion of Nature & Engineering </p>
+                        <p>• Science for sustainable future </p>
+                        <br>
+                        <p>PRICE & REWARD: </p><br>
+
+                        <p>➢ Certificate </p>
+                        <p>➢ RECOGNITION IN frond OF collage faculty & student </p>
+                            <p></p>
+                    <br>
+                        <p>COORDINTORS: </p><br>
+                        <p>• Snaha Khamaru </p>
+                        <p>• Sampili Debbarama </p>
+                        <p>• D.Pardha Saradhi</p>
+                        <p>• Utsaw Kumar</p>
+                </details>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="event-container">
+            <img class="event-image" src="quiz.jpeg" alt="BGMI/Freefire Event">
+
+            <div class="event-info">
+                <h2 class="event-title">Quiz Competition</h2>
+                <p class="event-organizer">Date – 07.04.2025 </p>
+                <p class="event-description">“Quiz Competition” is an interactive and engaging platform for participants to test their knowledge, enhance cognitive skills, and stimulate critical thinking through a competitive quiz format. The quiz aims to challenge players across diverse topics, encourage learning, and foster mental agility while creating a fun, high-energy environment for all participants. Through this quiz, individuals can boost their memory, quick decision-making, and problem-solving abilities, making it an exciting and enriching experience for everyone involved.</p>
+                <p>EVENT DETAILS </p><br>
+                <p>• DATE – 08.04.2025 (03:00 – 05:00) </p><br>
+                <p>REGISTRATION DEADLINE – 06.04.2025</p><br>
+                <p>SOLO </p>
+              
+
+                  <div class="button-container">
+                    <button class="button register-button" onclick="window.open('https://forms.gle/mssvdpUxq8pgfLWV8', '_blank');">Register Now</button>
+                    <details>
+                    <summary class="button more-info-button">More Info</summary>
+                    <p>Here are the detailed rules and guidelines for the Quiz competition:</p>
+                    <br>
+                    <p>QUIZ OVERVIEW: </p><br>
+                    <p>• Duration per Question: 60 seconds</p> 
+                    <p>• Total Time: 60 minutes </p>
+                    <p>• Question Type: Multiple Choice </p>
+                    <p>• Scoring: Based on time taken to answer and correctness of the response </p>
+                    <br><p>RULES</p><br>
+                    <p>➢ You will have 60 seconds to answer each question. </p>
+                    <p>➢ Each question is timed, and your score will be calculated based on both accuracy and 
+                        speed.</p>
+                    <p>➢ Once you select your answer, the timer will stop, and the next question will appear. </p>
+                    <P>➢ Your score will be displayed at the end of the quiz. </P>  <br>
+                        <p>QUIZ SCORING SYSTEM</p><br>
+
+                        <p>• The faster you answer correctly, the more points you will earn. </p>
+                        <br><p>CHANCE OF WINNING</p><br>
+                        <p>• The participant who secured highest score will be considered as winner. </p>
+                        <br>
+                        <p>PRICE & REWARD: </p><br>
+
+                        <p>➢ Certificate </p>
+                        <p>➢ RECOGNITION IN frond OF collage faculty & student </p>
+                            <p></p>
+                    <br>
+                        <p>COORDINTORS: </p><br>
+                        <p>• Tanishqa sahu</p>
+                        <p>• Sampili Debbarama </p>
+                        <p>• Manjeet</p>
+                        <p>• Yatharth </p>
+                        <p>• Sunil Khichar</p>
+                </details>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="event-container">
+            <img class="event-image" src="cad.jpeg" alt="BGMI/Freefire Event">
+
+            <div class="event-info">
+                <h2 class="event-title">CAD Modeling</h2>
+                <p class="event-organizer">Date – 07.04.2025 </p>
+                <p class="event-description">Join us for an exhilarating CAD design challenge where participants will put their creativity and skills to the test! In this competition, you'll have the opportunity to showcase your ability. The objective of this challenge is to test participants’ ability to translate a 2D sketch into a fully realized 3D model using CAD SOFTWARE. Participants will need to demonstrate their proficiency in interpreting dimensions, visualizing geometry, and applying MODELING techniques to accurately represent the given sketch in THREE DIMENSIONS. </p>
+                <p>EVENT DETAILS </p><br>
+                <p>• DATE – 07.04.2025</p><br>
+                <p>REGISTRATION DEADLINE – 06.04.2025</p><br>
+                <p>SOLO </p>
+              
+
+                  <div class="button-container">
+                    <button class="button register-button" onclick="window.open('https://forms.gle/mssvdpUxq8pgfLWV8', '_blank');">Register Now</button>
+                    <details>
+                    <summary class="button more-info-button">More Info</summary>
+                    <p>Here are the detailed rules and guidelines for the CAD Modeling competition:</p>
+                    <br>
+                    <p>CHALLENGE DESCRIPTION </p><br>
+                    <p>• ROUND 1 – Participants will be provided with a 2D sketch depicting a MECHANICAL 
+                        component; using CAD SOFTWARE, participants must accurately translate the sketch 
+                        into a detailed 3D MODEL.</p> <br>
+                    <p>• ROUND 2 – Participants will get an “object” and a measuring instrument to make a 3D 
+                        MODEL of that object. The challenge will test participants' accuracy, creativity, and 
+                        efficiency in MODELING techniques. </p>
+                    <br><p>RULES</p><br>
+                    <p>➢ Any CAD-SOFTWARE can be used for the specific task. </p>
+                    <p>➢ Online sources can be utilized during the specific task. </p>
+                    <p>➢ No faculty will help to perform.</p>
+                    <P>➢ Accuracy: Ensure your 3D model closely matches the dimensions and features of the provided 
+                        sketch.</P> 
+                    <p>➢ Detailing: Focus on capturing essential details while maintaining clarity and simplicity in your 
+                        design.</p>
+                    <p>➢ Complexity: Select modeling techniques appropriate to the complexity of the sketch.</p>
+                    <p>➢ Time Limit: Complete the 3D modeling task within the allocated time frame. </p> <br>
+                        <br><p>CHANCE OF WINNING</p><br>
+                        <p>➢ First priority: Fast and accurate model generation</p>
+                        <p>➢ Second priority: Minimum number of feature use </p><br>
+                        <p>PRICE & REWARD: </p><br>
+
+                        <p>➢ Certificate </p>
+                        <p>➢ RECOGNITION IN frond OF collage faculty & student </p>
+                            <p></p>
+                    <br>
+                        <p>COORDINTORS: </p><br>
+                        <p>• Chandan Kumar </p>
+                        <p>• Harsit Tiwari </p>
+                        <p>• Mayank Rawat</p>
+                        <p>• Pushpank Sharma</p>
+                        <p>• Navnit Chauhan</p>
+                </details>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="event-container">
+            <img class="event-image" src="d2c.jpeg" alt="BGMI/Freefire Event">
+
+            <div class="event-info">
+                <h2 class="event-title">Draft to Craft</h2>
+                <p class="event-organizer">Date – 07.04.2025 </p>
+                <p class="event-description">“Draft to Craft” in plastic recycling aim to foster innovation, efficiency, and sustainability in recycling processes, products, and policies. They involve creating solutions that are environmentally responsible, economically viable, and scalable for reducing plastic waste in the long run. Plastic recycling focuses on moving from theoretical solutions to tangible, real-world applications that can reduce plastic waste, improve recycling systems, and create sustainable alternatives. </p>
+                <p>EVENT DETAILS </p><br>
+                <p>• DATE – 07.04.2025 (12:15 – 01:00)</p><br>
+                <p>REGISTRATION DEADLINE – 06.04.2025</p><br>
+                <p>DUO or SOLO</p>
+              
+
+                  <div class="button-container">
+                    <button class="button register-button" onclick="window.open('https://forms.gle/wA1TvSR5cFDUn87x6', '_blank');">Register Now</button>
+                    <details>
+                    <summary class="button more-info-button">More Info</summary>
+                    <p>Here are the detailed rules and guidelines for the Draft to Craft competition:</p>
+                    <br>
+                    <br><p>RULES</p><br>
+                    <p>Eligibility</p><BR>
+                    <p>• The competition is open to all students of the college.</p>
+                    <p>• Participants can register as individuals or in teams (max 2 members per team).</p>
+                    <BR><P>Theme & Objective </P> <BR>
+                    <p>• Participants must create a functional or decorative product using plastic waste.</p>
+                    <p>• The final product should be innovative, eco-friendly, and demonstrate effective 
+                        plastic waste reuse. </p>
+                    <BR><p>Allowed Materials </p><BR>
+                    <p>• Only plastic waste (Working and non- working model) </p>
+                    <P>• Other supporting materials like glue, paint, thread, or wood can be used. </P> <br>
+                    <BR><P>Process & Timelines </P>  <BR>  
+                    <P>• Idea Submission: Teams must submit a brief proposal.</P>
+                    <P>• The concept & inspiration Materials used Practical use or impact.</P>
+                    <BR><P>Judging Criteria </P><BR>
+                    <P>• Innovation & Creativity – Uniqueness and originality of the craft </P>
+                    <P>• Effective Use of Plastic Waste– How much plastic waste is repurposed </P>
+                    <P>• Functionality– Usability of the product </P>
+                    <P>• Sustainability– Environmental impact of the project</P>
+                    <BR><P>Prohibited Activities </P><BR>
+                    <P>• No pre-made plastic items should be used except waste materials. </P>
+                    <P>• Projects must be safe and non-toxic (no harmful chemicals or unsafe processes). </P>
+                    <br>
+                        <p>PRICE & REWARD: </p><br>
+
+                        <p>➢ The top 2 projects will receive certificates and prizes. </p>
+                        <p>➢ Recognition in front of college faculty & student. </p>
+                            <p></p>
+                    <br>
+                        <p>COORDINTORS: </p><br>
+                        <p>• Mohammed Adnan</p>
+                        <p>• Palak</p>
+                        <p>• Sujit Nayak </p>
+                        <p>• Pinkesh Kumar</p>
+                        <p>• Sandeep Kumar</p>
+                </details>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="event-container">
+            <img class="event-image" src="treasure.jpeg" alt="BGMI/Freefire Event">
+
+            <div class="event-info">
+                <h2 class="event-title">Hunter Hunk </h2>
+                <p class="event-organizer">Date – 07.04.2025 </p>
+                <p class="event-description">Welcome to "Hunter Hunk," an exciting adventure filled with clues, challenges, and teamwork! This journey sharpens skills like problem-solving, communication, and collaboration. Each clue brings you closer to the ultimate prize, fostering quick thinking and perseverance. It's more than a game – it's a chance to grow while having fun. Gather your friends and join the unforgettable "Hunter Hunk" experience!</p>
+                <p>EVENT DETAILS </p><br>
+                <p>• DATE – 10.04.2025 </p><br>
+                <p>REGISTRATION DEADLINE – 06.04.2025</p><br>
+                <p>TRIO or SQUAD</p>
+              
+
+                  <div class="button-container">
+                    <button class="button register-button" onclick="window.open('https://forms.gle/wA1TvSR5cFDUn87x6', '_blank');">Register Now</button>
+                    <details>
+                    <summary class="button more-info-button">More Info</summary>
+                    <p>Here are the detailed rules and guidelines for the Hunter Hunk competition:</p>
+                    <br>
+                    <P>CHALLENGE DESCRIPTION </P><BR>
+                    <P>Form a team of 3 to 4 members and dive into the thrilling "Hunter Hunk" competition! Tackle a series of challenges, with each clue unlocking the next step toward the hidden Hunter. Missing a clue could cost victory, so stay sharp and ready for surprises. This adventure is about showcasing teamwork, problem-solving, and embracing the journey. Gather your courage and embark on an unforgettable quest for the ultimate prize!</P>
+                    <br><p>RULES</p><br>
+                    <p>➢ Each team must consist of a minimum of 3 and a maximum of 4 members.</p>
+                    <p>➢ The Hunter Hunk comprises 5 clues, with each clue leading to the next in a 
+                        specific sequence. Teams must follow this sequence; skipping a clue will 
+                        result in disqualification. </p>
+                    <p>➢ Clues must be sought only in designated areas; searching in off-limit areas 
+                        is prohibited.</p>
+                    <P>➢ If a team accidentally discovers another team's clue, they must not interfere 
+                        with it; any tampering will lead to disqualification. </P> 
+                    <p>➢ Participants must return any objects moved during the search to their original 
+                        positions. </p>
+                    <p>➢ While all teams have different clues located in various places, the final 
+                        destination (the hunter) remains the same. The team that finds the hunter 
+                        first wins </p>
+                    <p>➢ Decisions made by the judges are considered final and binding </p>
+                    <BR><p>CHANGE OF WINNING</p><BR>
+                    <P>➢ The tea that finds the Hunter first wins. </P> <br>
+                        <p>PRICE & REWARD: </p><br>
+
+                        <p>➢ CERTIFICATE </p>
+                        <p>➢ Cash prize</p>
+                            <p></p>
+                    <br>
+                        <p>COORDINTORS: </p><br>
+                        <p>• Pushpank Sharma </p>
+                        <p>• Mohammed Adnan</p>
+                        <p>• Tanishqa Sahu</p>
+                        <p>• Snaha Khamaru </p>
+                </details>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="event-container">
+            <img class="event-image" src="escape.jpg" alt="BGMI/Freefire Event">
+
+            <div class="event-info">
+                <h2 class="event-title">Escape Room</h2>
+                <p class="event-organizer">Date – 07.04.2025 </p>
+                <p class="event-description">Trapped in a series of four mysterious rooms, your only way out is to solve the puzzles and move forward! Each room presents a unique brain-teasing challenge- find hidden clues and unlock the final exit. The fastest team to escape wins! </p>
+                <p>EVENT DETAILS </p><br>
+                <p>• DATE – 10.04.2025 </p><br>
+                <p>REGISTRATION DEADLINE – 06.04.2025</p><br>
+                <p>SQUAD</p>
+              
+
+                  <div class="button-container">
+                    <button class="button register-button" onclick="window.open('https://forms.gle/wA1TvSR5cFDUn87x6', '_blank');">Register Now</button>
+                    <details>
+                    <summary class="button more-info-button">More Info</summary>
+                    <p>Here are the detailed rules and guidelines for the Escape Room competition:</p>
+                    <br>
+                    <br><p>RULES</p><br>
+                    <p>➢ Team-Based Challenge: Participants compete in teams. </p>
+                    <p>➢ One Puzzle per Room: Solve the puzzle in the current room to unlock the next one</p>
+                    <p>➢ No External Help: No use of mobile phones, notes, or outside assistance. </p>
+                    <P>➢ Winning Criteria: The team that solves all puzzles and escapes first wins! </P> 
+                    <BR><p>CHANGE OF WINNING</p><BR>
+                    <P>➢ Strong Teamwork</P> 
+                    <P>➢ Stay Calm & Focused</P>
+                    <P>➢ Observe Everything</P>
+                    <P>➢ Time Management. </P>
+                    <br>
+                        <p>PRICE & REWARD: </p><br>
+
+                        <p>➢ CERTIFICATE </p>
+                        <p>➢ RECOGNITION IN FRONT OF COLLEGE FACULTY & STUDENT </p>
+                            <p></p>
+                    <br>
+                        <p>COORDINTORS: </p><br>
+                        <p>• Pushpank Sharma </p>
+                        <p>• Mohammed Adnan</p>
+                        <p>• Tanishqa Sahu</p>
+                        <p>• Snaha Khamaru </p>
+                </details>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="event-container">
+            <img class="event-image" src="gear.jpeg" alt="BGMI/Freefire Event">
+
+            <div class="event-info">
+                <h2 class="event-title">Gear Up Challenge</h2>
+                <p class="event-organizer">Date – 07.04.2025 </p>
+                <p class="event-description">Test your speed, precision, and mechanical skills in the Gear Up Challenge! Participants will assemble and disassemble a bicycle within a set time. The challenge is all about efficiency, teamwork, and technical.</p>
+                <p>EVENT DETAILS </p><br>
+                <p>• DATE – 08.04.2025 </p><br>
+                <p>REGISTRATION DEADLINE – 06.04.2025</p><br>
+                <p>SQUAD</p>
+              
+
+                  <div class="button-container">
+                    <button class="button register-button" onclick="window.open('https://forms.gle/wA1TvSR5cFDUn87x6', '_blank');">Register Now</button>
+                    <details>
+                    <summary class="button more-info-button">More Info</summary>
+                    <p>Here are the detailed rules and guidelines for the Gear Up competition:</p>
+                    <br>
+                    <br><p>RULES</p><br>
+                    <p>➢ Team Formation: Participants can compete individually or in teams (as per event 
+                        guidelines). </p>
+                    <p>➢ Provided Tools: Only the tools given by the organizers can be used—no personal 
+                        tools allowed. </p>
+                    <p>➢ Bicycle Model: All teams will work on the same model of a bicycle to ensure fairness. </p>
+                    <P>➢ Step-by-Step Process: Teams must first fully disassemble the bicycle and then 
+                        reassemble it correctly. </P> 
+                    <P>➢ Proper Assembly: The bicycle must be fully functional after assembly (wheels, 
+                        brakes, chain, and gears must work correctly). </P>
+                    <P>➢ Penalty for Errors: </P>
+                    <P>➢ Misaligned or missing parts will result in time penalties. </P>
+                    <P>➢ Unsafe assembly (loose bolts, improperly fitted brakes, etc.) will lead to 
+                        disqualification. </P>
+                    <P>➢ Judging Criteria: The winner is determined based on completion time, accuracy, and 
+                        functionality of the assembled bicycle. </P>
+                    <P>➢ Fair Play: No external help or instructions (like mobile searches or guidebooks) are 
+                        allowed during the challenge. </P>
+                    <BR><p>CHANGE OF WINNING</p><BR>
+                    <P>➢ Priority: Fast and accurate </P>
+                    <br>
+                        <p>PRICE & REWARD: </p><br>
+
+                        <p>➢ CERTIFICATE </p>
+                        <p>➢ RECOGNITION IN FRONT OF COLLEGE FACULTY & STUDENT </p>
+                            <p></p>
+                    <br>
+                        <p>COORDINTORS: </p><br>
+                        <p>• Ramavath Arun  </p>
+                        <p>• Pushpank Sharma</p>
+                        <p>• Mohammed Adnan</p>
+                        <p>• Divakar R </p>
+                </details>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="event-container">
+            <img class="event-image" src="mrmachanic.jpeg" alt="BGMI/Freefire Event">
+
+            <div class="event-info">
+                <h2 class="event-title">Mr. Mechanic</h2>
+                <p class="event-organizer">Date – 07.04.2025 </p>
+                <p class="event-description">Show off your mechanical expertise in the Mr. Mechanic Challenge! Participants must efficiently load and unload a mold within the given time while following proper safety and precision techniques. This event tests your technical skills, speed, and attention to detail. </p>
+                <p>EVENT DETAILS </p><br>
+                <p>• DATE – 08.04.2025 </p><br>
+                <p>REGISTRATION DEADLINE – 06.04.2025</p><br>
+                <p>TRIO</p>
+              
+
+                  <div class="button-container">
+                    <button class="button register-button" onclick="window.open('https://forms.gle/wA1TvSR5cFDUn87x6', '_blank');">Register Now</button>
+                    <details>
+                    <summary class="button more-info-button">More Info</summary>
+                    <p>Here are the detailed rules and guidelines for the Mr. Mechanic competition:</p>
+                    <br>
+                    <br><p>RULES</p><br>
+                    <p>➢ Use Only Provided Tools: Participants can only use the tools given by the organizers. </p>
+                    <p>➢ Step-by-Step Process: The mould must be properly loaded and unloaded as per the given 
+                        instructions. </p>
+                    <p>➢ Time Limit: The challenge must be completed within the set time. </p>
+                    <P>➢ Accuracy Matters:</P> 
+                    <P>➢ Any improper handling or incorrect positioning will result in penalties.</P>
+                    <P>➢ The mould must be secured properly before completion. </P>
+                    <P>➢ Judging Criteria: Winners are determined based on speed, accuracy, and safety 
+                        compliance. </P><BR>
+                    <P>CHANGE OF WINNING</P><BR>
+                    <P>➢ Priority: Fast and accurate </P>
+                    <br>
+                        <p>PRICE & REWARD: </p><br>
+
+                        <p>➢ CERTIFICATE </p>
+                        <p>➢ RECOGNITION IN FRONT OF COLLEGE FACULTY & STUDENT </p>
+                            <p></p>
+                    <br>
+                        <p>COORDINTORS: </p><br>
+                        <p>• Kaushal Kesari </p>
+                        <p>• Dipanshu </p>
+                        <p>• Harsh Raj</p>
+                        <p>• Manish Kumar</p>
+                        <P>• Ratan Kumar</P>
+                </details>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="event-container">
+            <img class="event-image" src="card.jpeg" alt="BGMI/Freefire Event">
+
+            <div class="event-info">
+                <h2 class="event-title">Card Tower</h2>
+                <p class="event-organizer">Date – 07.04.2025 </p>
+                <p class="event-description">Build the tallest and most stable tower using only playing cards! No glue, tape, or external support is allowed. You’ll have a limited time to carefully stack and balance the cards. The highest standing tower at the end wins. Test your patience, creativity, and engineering skills in this exciting challenge. </p>
+                <p>EVENT DETAILS </p><br>
+                <p>• DATE – 09.04.2025 </p><br>
+                <p>REGISTRATION DEADLINE – 06.04.2025</p><br>
+                <p>TRIO</p>
+              
+
+                  <div class="button-container">
+                    <button class="button register-button" onclick="window.open('https://forms.gle/wA1TvSR5cFDUn87x6', '_blank');">Register Now</button>
+                    <details>
+                    <summary class="button more-info-button">More Info</summary>
+                    <p>Here are the detailed rules and guidelines for the Card Tower competition:</p>
+                    <br>
+                    <br><p>RULES</p><br>
+                    <p>➢ Use only the provided playing cards.</p>
+                    <p>➢ No adhesives or external support allowed. </p>
+                    <p>➢ The tower must stand on its own for at least 60 seconds at the end of the 
+                        time limit. </p>
+                    <P>➢ The tallest standing tower wins! </P> 
+                    <BR>
+                    <P>CHANGE OF WINNING</P><BR>
+                    <P>➢ Priority: Fast and accurate Card Tower generate </P>
+                    <br>
+                        <p>PRICE & REWARD: </p><br>
+
+                        <p>➢ CERTIFICATE </p>
+                        <p>➢ RECOGNITION IN FRONT OF COLLEGE FACULTY & STUDENT </p>
+                            <p></p>
+                    <br>
+                        <p>COORDINTORS: </p><br>
+                        <p>• Sampili Debbarma </p>
+                        <p>• Pushpank Sharma </p>
+                        <p>• Ashish Chaudhary </p>
+                        <p>• Vansh Chauhan</p>
+                        <P>• Kapil Kumar</P>
+                </details>
+                 
+                </div>
+            </div>
+        </div>
+        <div class="event-container">
+            <img class="event-image" src="pixel.jpeg" alt="BGMI/Freefire Event">
+
+            <div class="event-info">
+                <h2 class="event-title">Pixel Con</h2>
+                <p class="event-organizer">Date – 11.04.2025 </p>
+                <p class="event-description">Pixel Con is an exciting event designed to showcase participants' creativity and technical skills in graphic design and digital art. It is a platform to innovate, inspire, and compete, bringing together talent and imagination</p>
+                <p>EVENT DETAILS </p><br>
+<br>
+                <p>REGISTRATION DEADLINE – 06.04.2025</p><br>
+                <p>SOLO</p>
+              
+
+                  <div class="button-container">
+                    <button class="button register-button" onclick="window.open('https://forms.gle/wA1TvSR5cFDUn87x6', '_blank');">Register Now</button>
+                    <details>
+                    <summary class="button more-info-button">More Info</summary>
+                    <p>Here are the detailed rules and guidelines for The Big Display competition:</p>
+                    <br>
+                    <br><p>RULES</p><br>
+                    <p>➢ SUBMISSION DEADLINE- 11.04.2025(Before 1:00 PM) </p>
+                    <p>➢ Time limit-30 sec to 1 min</p>
+                    <p>➢ Don’t copy from online.</p>
+                    <p>➢ Name should be present on reels.</p>
+                    <p>➢ Don't  make false or damaging statements about individuals or organization.</p>
+                    <p>➢ Video quality should be high.</p>
+                    <p>➢ Participants must submit their designs by the specified deadline.</p>
+                    <p>➢ Only original and creative works are allowed—no plagiarism will be tolerated.</p>
+                    <p>➢ Designs must follow the theme (if any) provided for the event.</p>
+                    <P>➢ Digital artworks must be submitted in a specific format (JPEG/PNG) and resolution (as directed by coordinators).</P> 
+                    <P>➢ Judging criteria will include creativity, technical expertise, and alignment with the theme.</P>
+                    <BR><p>TOPIC</p><br>
+                        <p>1.Events occur in Tech.Fest.</p>
+                        <p>2.CIPET Jaipur</p><br>
+                    <P>CHANGE OF WINNING</P><BR>
+                    <P>➢ Your chance of winning increases with originality, adherence to the theme.</P>
+                    <P>➢ Effective use of design elements.</P>
+                    <P>➢ A professional and polished final piece, combined with innovative ideas, will set your work apart. </P>
+                    <br>
+                        <p>PRICE & REWARD: </p><br>
+
+                        <p>➢ CERTIFICATE </p>
+                        <p>➢ RECOGNITION IN FRONT OF COLLEGE FACULTY & STUDENT </p>
+                        <br>
+                        <p>COORDINTORS: </p><br>
+                        <p>• Ramavath Arun </p>
+                        <p>• Kushang Upadhyay</p>
+                        <p>• Akash Kumar</p>
+                        <p>• Vidit Sankar</p>
+                        <P>• Sawan Meena</P>
+                </details>
+                 
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+<footer class="footer">
+    <div class="footer-background"></div>
+        <div class="web-team">
+            <h1 id="contact">Web Team</h1>
+            <div class="team-members">
+                <div class="team-member">
+                    <a href="https://www.linkedin.com/in/divakarr04">
+                        <img src="Divakar.jpeg" alt="Divakar R Profile" style="cursor: pointer;">
+                    </a>
+                    <h2>Divakar R</h2>
+                    <p> B.Tech Plastic Technology (PT)</p>
+                </div>
+                <div class="team-member">
+                    <a href="https://www.linkedin.com/in/nejderikantoej">
+                       <img src="Anto.jpeg" alt="Nej Derik Anto E J Profile" style="cursor: pointer;">
+                    </a>
+                    <h2>Nej Derik Anto E J</h2>
+                    <p>B.Tech (ME)</p>
+                </div>
+                <div class="team-member">
+                    <a href="http://www.linkedin.com/in/sanjai-p-9a77b5313">
+                       <img src="sanjay.jpg" alt="Nej Derik Anto E J Profile" style="cursor: pointer;">
+                    </a>
+                    <h2>Sanjai P</h2>
+                    <p>B.Tech Cyber security</p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+    
+            <ul>
+                <li>Tech.Officer</li>
+                <li>Dr. T.Senthil </li>
+                <li>Ph no: +91-99458 47361</li>
+            </ul>
+            <ul>
+                <li>Tech.Officer</li>
+                <li>Dr. Piyush Kumar</li>
+                <li>Ph no: +91-78909 26806</li>
+            </ul>
+            <ul>
+                <li>Asst.Tech.Officer</li>
+                <li>Mr. Azmeera Balu</li>
+                <li>Ph no: +91-9440236305</li>
+            </ul>
+            <ul>
+                <li>Asst.Prof</li>
+                <li>Mr. Jagdish Rajpurohit</li>
+                <li>Ph no: +91-97824 91626</li>
+            </ul>
+    
+            <ul>
+                <li>Students Overall Coordinators</li>
+                <li>Mr.Pushpank Sharma</li>
+                <li>Mr.Mohammed Adnan</li>
+                <li>Mr.Ramavath Arun</li>
+                <li>Mr.Tanishqa Sahu</li>
+                <li>Mr.Snaha Khamaru</li>
+                <li>Mr.Sampili Debbaram</li>
+            </ul>
+            <div class="socials">
+                <a href="https://www.facebook.com/cipetiptjaipur" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/CipetIpt" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/cipetipt_jaipur/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/cipet-ipt-jaipur-a3914b283" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <div class="copyright">
+                © 2025 CIPET:IPT
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const header = document.querySelector('.header'); // Get the header element
+        let lastScrollTop = 0;
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (event) => {
+            const isClickInsideMenu = navLinks.contains(event.target);
+            const isClickOnToggle = menuToggle.contains(event.target);
+
+            if (!isClickInsideMenu && !isClickOnToggle && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Scroll event listener
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > lastScrollTop) {
+                header.style.top = '-100%'; // Hide the header
+            } else {
+    // Scrolling Up
+    if (scrollTop <= 0) {
+        // At the top
+        header.style.top = '0'; // Show the header
+    } else {
+        // Not at the top, but scrolling up
+        header.style.top = '-100%'; // Keep it hidden until the top is reached
+    }
+}
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+        });
+    </script>
+
+</html>
